@@ -5,7 +5,7 @@
   "type": "module",
   "license": "UNLICENSED",
   "scripts": {
-    "start": "node bin/server.js",
+    "start": "node bin/server.ts",
     "build": "node ace build",
     "dev": "node ace serve --hmr",
     "test": "node ace test",
@@ -52,10 +52,13 @@
   },
   "dependencies": {
     "@adonisjs/auth": "^9.4.0",
-    "@adonisjs/core": "^6.18.0",
+    "@adonisjs/core": "^6.19.0",
     "@adonisjs/cors": "^2.2.1",
     "@adonisjs/lucid": "^21.6.1",
+    "@adonisjs/static": "^1.1.1",
+    "@adonisjs/vite": "^4.0.0",
     "@vinejs/vine": "^3.0.1",
+    "edge.js": "^6.2.1",
     "luxon": "^3.6.1",
     "pg": "^8.16.3",
     "reflect-metadata": "^0.2.2"

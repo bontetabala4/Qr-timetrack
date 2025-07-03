@@ -27,5 +27,9 @@ export default await Env.create(new URL('../', import.meta.url), {
   DB_PORT: Env.schema.number(),
   DB_USER: Env.schema.string(),
   DB_PASSWORD: Env.schema.string.optional(),
-  DB_DATABASE: Env.schema.string()
+  DB_DATABASE: Env.schema.string(),
 })
+// .catch((error) => {
+//   console.error('Failed to load environment variables:', error)
+//   process.exit(1)
+// })

@@ -1,41 +1,44 @@
 /*
 |--------------------------------------------------------------------------
-| HTTP kernel file
+| HTTP Kernel
 |--------------------------------------------------------------------------
 |
-| The HTTP kernel file is used to register the middleware with the server
-| or the router.
+| Point d'entrée pour enregistrer les middlewares globaux et nommés.
+| Les middlewares globaux sont appliqués à toutes les requêtes,
+| les middlewares nommés sont appliqués aux routes spécifiques.
 |
 */
 
-import router from '@adonisjs/core/services/router'
 import server from '@adonisjs/core/services/server'
+import router from '@adonisjs/core/services/router'
 
 /**
- * The error handler is used to convert an exception
- * to an HTTP response.
+ * Gestionnaire des erreurs global
  */
 server.errorHandler(() => import('#exceptions/handler'))
 
 /**
- * The server middleware stack runs middleware on all the HTTP
- * requests, even if there is no route registered for
- * the request URL.
+ * Middleware globaux (exécutés sur toutes les requêtes)
  */
 server.use([
   () => import('#middleware/container_bindings_middleware'),
-  () => import('#middleware/force_json_response_middleware'),
-  () => import('@adonisjs/cors/cors_middleware'),
+  () => import('@adonisjs/static/static_middleware'),
+  () => import('@adonisjs/vite/vite_middleware'),
 ])
 
 /**
- * The router middleware stack runs middleware on all the HTTP
- * requests with a registered route.
+ * Middleware appliqués aux routes enregistrées (router middleware)
  */
-router.use([() => import('@adonisjs/core/bodyparser_middleware')])
+router.use([
+  () => import('@adonisjs/core/bodyparser_middleware'),
+  () => import('@adonisjs/auth/initialize_auth_middleware'),
+  () => import('#middleware/force_json_response_middleware'),
+  () => import('#middleware/container_bindings_middleware'),
+])
 
 /**
- * Named middleware collection must be explicitly assigned to
- * the routes or the routes group.
+ * Middleware nommés, à appliquer individuellement aux routes ou groupes
  */
-export const middleware = router.named({})
+export const middleware = router.named({
+  // auth: () => import('#middleware/auth_middleware'),
+})

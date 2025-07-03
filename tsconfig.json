@@ -1,7 +1,28 @@
 {
-  "extends": "@adonisjs/tsconfig/tsconfig.app.json",
   "compilerOptions": {
-    "rootDir": "./",
-    "outDir": "./build"
-  }
+    "target": "ES2020",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "outDir": "build",
+    "rootDir": ".",
+    "baseUrl": "./", 
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "paths": {
+      "@adonisjs/static/*": ["node_modules/@adonisjs/static/build/src/*"],
+      "@adonisjs/vite/*": ["node_modules/@adonisjs/vite/build/src/*"],
+      "#middleware/*": ["./app/Middleware/*"]
+    }
+  },
+  "ts-node": {
+    "transpileOnly": true,
+    "files": true,
+    "esm": true
+  },
+  "include": ["app", "start"],
+  "exclude": ["node_modules"]
 }
