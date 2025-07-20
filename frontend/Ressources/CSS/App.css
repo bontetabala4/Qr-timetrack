@@ -1,3 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  min-height: 100vh;
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -39,4 +60,20 @@
 
 .read-the-docs {
   color: #888;
+}
+
+.footer {
+  margin-top: 20px;
+  font-size: 12px;
+  color: #657786;
+}
+
+.footer a {
+  color: #657786;
+  text-decoration: none;
+  margin-right: 10px;
+}
+
+.footer a:hover {
+  text-decoration: underline;
 }

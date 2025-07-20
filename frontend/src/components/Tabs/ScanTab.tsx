@@ -31,13 +31,33 @@ export default function ScanTab() {
       cameraId,
       { fps: 10, qrbox: 250 },
       (decodedText) => {
-        alert(`QR détecté : ${decodedText}`);
+const now = new Date();
+const date = now.toLocaleDateString();
+const time = now.toLocaleTimeString();
 
-        const now = new Date();
-        const date = now.toLocaleDateString();
-        const time = now.toLocaleTimeString();
+// Enregistrement côté frontend (local)
+setHistory((prev) => [...prev, { code: decodedText, date, time }]);
 
-        setHistory((prev) => [...prev, { code: decodedText, date, time }]);
+// Envoi vers le backend
+fetch("http://localhost:3333/api/attendances", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({ employee_id: decodedText }),
+})
+  .then((res) => {
+    if (!res.ok) throw new Error("Erreur lors de l’enregistrement");
+    return res.json();
+  })
+  .then((data) => {
+    console.log("✅ Pointage enregistré sur le backend :", data);
+  })
+  .catch((err) => {
+    console.error("❌ Erreur de communication avec le backend :", err);
+    alert("Erreur de communication avec le serveur !");
+  });
+
       },
       () => {} // onScanFailure ignoré pour l’instant
     );
@@ -150,3 +170,4 @@ export default function ScanTab() {
     </motion.div>
   );
 }
+
